@@ -4,9 +4,8 @@ import { useConvexAuth } from "convex/react";
 import { redirect } from "next/navigation";
 
 import { Spinner } from "@/components/spinner";
+import { Navigation } from "./components/navigation";
 // import { SearchCommand } from "@/components/search-command";
-
-// import { Navigation } from "./_components/navigation";
 
 interface MainLayoutProps {
     children: React.ReactNode;
@@ -29,7 +28,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
     return (
         <div className="flex h-full dark:bg-[#1F1F1F]">
-            {/* <Navigation /> */}
+            <Navigation />
             <main className="h-full flex-1 overflow-y-auto">
                 {/* <SearchCommand /> */}
                 {children}
