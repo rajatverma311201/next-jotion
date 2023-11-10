@@ -149,6 +149,7 @@ export const Item: React.FC<ItemProps> & {
                             align="start"
                             side="right"
                             forceMount
+                            onClick={(e) => e.stopPropagation()}
                         >
                             <DropdownMenuItem onClick={onArchive}>
                                 <Trash className="mr-2 h-4 w-4" />
