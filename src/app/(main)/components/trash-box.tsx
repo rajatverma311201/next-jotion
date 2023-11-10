@@ -29,7 +29,6 @@ export const TrashBox = () => {
     const onClick = (documentId: string) => {
         router.push(`/documents/${documentId}`);
     };
-
     const onRestore = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>,
         documentId: Id<"documents">,
