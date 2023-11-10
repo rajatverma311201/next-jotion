@@ -17,7 +17,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     if (isLoading) {
         return (
             <div className="flex h-full items-center justify-center">
-                <Spinner size="icon" />
+                <Spinner size="lg" />
             </div>
         );
     }

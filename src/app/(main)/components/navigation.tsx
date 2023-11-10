@@ -1,6 +1,12 @@
 import { cn } from "@/lib/utils";
-import { ChevronsLeft, MenuIcon } from "lucide-react";
-import { usePathname } from "next/navigation";
+import {
+    ChevronsLeft,
+    MenuIcon,
+    PlusCircle,
+    Search,
+    Settings,
+} from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
 import React, {
     ElementRef,
     useCallback,
@@ -10,9 +16,17 @@ import React, {
 } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { UserItem } from "./user-item";
+import { Item } from "./item";
+import { useMutation } from "convex/react";
+import { api } from "@/../convex/_generated/api";
+import { toast } from "sonner";
+import { DocumentList } from "./document-list";
 
 export const Navigation = () => {
     const pathname = usePathname();
+    const router = useRouter();
+
+    const create = useMutation(api.documents.create);
 
     const isMobile = useMediaQuery("(max-width: 768px)");
 
@@ -100,6 +114,18 @@ export const Navigation = () => {
         }
     };
 
+    const handleCreate = () => {
+        const promise = create({ title: "Untitled" }).then((documentId) =>
+            router.push(`/documents/${documentId}`),
+        );
+
+        toast.promise(promise, {
+            loading: "Creating a new note...",
+            success: "New note created!",
+            error: "Failed to create a new note.",
+        });
+    };
+
     return (
         <>
             <aside
@@ -122,6 +148,25 @@ export const Navigation = () => {
                 </div>
                 <div>
                     <UserItem />
+                    <Item
+                        label="Search"
+                        icon={Search}
+                        isSearch
+                        // onClick={search.onOpen}
+                    />
+                    <Item
+                        label="Settings"
+                        icon={Settings}
+                        // onClick={settings.onOpen}
+                    />
+                    <Item
+                        onClick={handleCreate}
+                        label="New page"
+                        icon={PlusCircle}
+                    />
+                </div>
+                <div className="my-5">
+                    <DocumentList />
                 </div>
                 <div
                     onMouseDown={handleMouseDown}
