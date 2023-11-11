@@ -19,7 +19,7 @@ import React, {
 import { useMediaQuery } from "usehooks-ts";
 import { UserItem } from "./user-item";
 import { Item } from "./item";
-import { useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "@/../convex/_generated/api";
 import { toast } from "sonner";
 import { DocumentList } from "./document-list";
@@ -32,6 +32,7 @@ import { TrashBox } from "./trash-box";
 import { useSearch } from "@/hooks/use-search";
 import { useSettings } from "@/hooks/use-settings";
 import { Navbar } from "./navbar";
+import { Id } from "@/../convex/_generated/dataModel";
 
 export const Navigation = () => {
     const pathname = usePathname();
@@ -39,6 +40,15 @@ export const Navigation = () => {
     const params = useParams();
 
     const create = useMutation(api.documents.create);
+    const currDoc = useQuery(api.documents.getById, {
+        documentId: params.documentId as Id<"documents">,
+    });
+
+    const [popoverOpen, setPopoverOpen] = useState(false);
+
+    const parentDocIds = useQuery(api.documents.getAllParentsRecursive, {
+        documentId: params.documentId as Id<"documents">,
+    });
 
     const isMobile = useMediaQuery("(max-width: 768px)");
 
@@ -141,6 +151,9 @@ export const Navigation = () => {
         });
     };
 
+    const activeDocs = [];
+    const addCurrDocs = (id: Id<"documents">) => {};
+
     return (
         <>
             <aside
@@ -181,13 +194,13 @@ export const Navigation = () => {
                     />
                 </div>
                 <div className="my-5">
-                    <DocumentList />
+                    <DocumentList parentDocIds={parentDocIds} />
                     <Item
                         onClick={handleCreate}
                         icon={Plus}
                         label="Add a page"
                     />
-                    <Popover>
+                    <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
                         <PopoverTrigger className="mt-4 w-full">
                             <Item label="Trash" icon={Trash} />
                         </PopoverTrigger>
@@ -195,7 +208,7 @@ export const Navigation = () => {
                             className="w-72 p-0"
                             side={isMobile ? "bottom" : "right"}
                         >
-                            <TrashBox />
+                            <TrashBox onClose={() => setPopoverOpen(false)} />
                         </PopoverContent>
                     </Popover>
                 </div>

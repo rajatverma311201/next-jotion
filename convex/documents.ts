@@ -232,8 +232,12 @@ export const getSearch = query({
 });
 
 export const getById = query({
-    args: { documentId: v.id("documents") },
+    args: { documentId: v.optional(v.id("documents")) },
     handler: async (ctx, args) => {
+        if (!args.documentId) {
+            return null;
+        }
+
         const identity = await ctx.auth.getUserIdentity();
 
         const document = await ctx.db.get(args.documentId);
@@ -353,5 +357,56 @@ export const removeCoverImage = mutation({
         });
 
         return document;
+    },
+});
+
+// export const getAllParentsRecursive = query({
+//     args: { documentId: v.id("documents")},
+//     handler: async (ctx, args) => {
+//         const document = await ctx.db.get(args.documentId);
+
+//         if (!document) {
+//             return parents;
+//         }
+
+//         if (!document.parentDocument) {
+//             return parents;
+//         }
+
+//         parents.push(document.parentDocument);
+
+//         return getAllParentsRecursive(ctx, document.parentDocument, parents);
+//     },
+// });
+
+export const getAllParentsRecursive = query({
+    args: { documentId: v.optional(v.id("documents")) },
+    handler: async (ctx, args) => {
+        const parents: Id<"documents">[] = [];
+
+        const recursive = async (
+            documentId?: Id<"documents">,
+        ): Promise<Id<"documents">[]> => {
+            if (!documentId) {
+                return parents;
+            }
+            const document = await ctx.db.get(documentId);
+
+            if (!document) {
+                return parents;
+            }
+
+            if (!document.parentDocument) {
+                return parents;
+            }
+
+            parents.push(document.parentDocument);
+
+            return recursive(document.parentDocument);
+        };
+
+        await recursive(args.documentId);
+
+        return parents;
     },
 });

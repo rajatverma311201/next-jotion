@@ -9,7 +9,7 @@ import {
     Trash,
 } from "lucide-react";
 import { useMutation } from "convex/react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useUser } from "@clerk/clerk-react";
 
@@ -53,7 +53,7 @@ export const Item: React.FC<ItemProps> & {
     onExpand,
     expanded,
 }) => {
-    console.log("Item", "active", active);
+    const params = useParams();
     const { user } = useUser();
     const router = useRouter();
     const create = useMutation(api.documents.create);
@@ -108,7 +108,10 @@ export const Item: React.FC<ItemProps> & {
             }}
             className={cn(
                 "group flex min-h-[27px] w-full items-center py-1 pr-3 text-sm font-medium text-muted-foreground hover:bg-primary/5",
-                active && "bg-primary/5 text-primary",
+                active && "text-primary",
+                params.documentId &&
+                    params.documentId === id &&
+                    "bg-primary/5 font-semibold text-primary",
             )}
         >
             {!!id && (

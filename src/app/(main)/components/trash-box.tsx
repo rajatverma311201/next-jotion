@@ -12,7 +12,11 @@ import { Spinner } from "@/components/spinner";
 import { Input } from "@/components/ui/input";
 import { ConfirmModal } from "@/components/modals/confirm-modal";
 
-export const TrashBox = () => {
+interface TrashBoxProps {
+    onClose: () => void;
+}
+
+export const TrashBox: React.FC<TrashBoxProps> = ({ onClose }) => {
     const router = useRouter();
     const params = useParams();
     console.log(params);
@@ -27,6 +31,7 @@ export const TrashBox = () => {
     });
 
     const onClick = (documentId: string) => {
+        onClose();
         router.push(`/documents/${documentId}`);
     };
     const onRestore = (
@@ -41,6 +46,8 @@ export const TrashBox = () => {
             success: "Note restored!",
             error: " Failed to restore note.",
         });
+
+        onClose();
     };
 
     const onRemove = (documentId: Id<"documents">) => {
@@ -51,7 +58,7 @@ export const TrashBox = () => {
             success: "Note deleted!",
             error: " Failed to delete note.",
         });
-
+        onClose();
         if (params.documentId === documentId) {
             router.push("/documents");
         }

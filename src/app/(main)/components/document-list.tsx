@@ -15,11 +15,13 @@ interface DocumentListProps {
     parentDocumentId?: Id<"documents">;
     level?: number;
     data?: Doc<"documents">[];
+    parentDocIds?: Id<"documents">[];
 }
 
 export const DocumentList: React.FC<DocumentListProps> = ({
     parentDocumentId,
     level = 0,
+    parentDocIds,
 }) => {
     const params = useParams();
 
@@ -77,13 +79,24 @@ export const DocumentList: React.FC<DocumentListProps> = ({
                         label={document.title}
                         icon={FileIcon}
                         documentIcon={document.icon}
-                        active={params.documentId === document._id}
+                        active={
+                            params.documentId === document._id ||
+                            parentDocIds?.[parentDocIds?.length - level - 1] ===
+                                document._id
+                        }
                         level={level}
                         onExpand={() => onExpand(document._id)}
-                        expanded={expanded[document._id]}
+                        expanded={
+                            expanded[document._id] ||
+                            parentDocIds?.[parentDocIds?.length - level - 1] ===
+                                document._id
+                        }
                     />
-                    {expanded[document._id] && (
+                    {(expanded[document._id] ||
+                        parentDocIds?.[parentDocIds?.length - level - 1] ===
+                            document._id) && (
                         <DocumentList
+                            parentDocIds={parentDocIds}
                             parentDocumentId={document._id}
                             level={level + 1}
                         />
