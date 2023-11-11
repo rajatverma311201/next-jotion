@@ -53,6 +53,7 @@ export const Item: React.FC<ItemProps> & {
     onExpand,
     expanded,
 }) => {
+    console.log("Item", "active", active);
     const { user } = useUser();
     const router = useRouter();
     const create = useMutation(api.documents.create);

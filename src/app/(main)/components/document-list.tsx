@@ -22,6 +22,7 @@ export const DocumentList: React.FC<DocumentListProps> = ({
     level = 0,
 }) => {
     const params = useParams();
+
     const router = useRouter();
     const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
