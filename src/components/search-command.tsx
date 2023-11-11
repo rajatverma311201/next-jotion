@@ -52,6 +52,10 @@ export const SearchCommand = () => {
         return null;
     }
 
+    if (document == undefined) {
+        return null;
+    }
+
     return (
         <CommandDialog open={isOpen} onOpenChange={onClose}>
             <CommandInput

@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ConvexClientProvider } from "@/components/providers/convex-provider";
 import { Toaster } from "sonner";
 import { SearchCommand } from "@/components/search-command";
+import { ModalProvider } from "@/components/providers/modal-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -38,16 +39,20 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 <ConvexClientProvider>
                     <ThemeProvider
                         attribute="class"
-                        defaultTheme="system"
+                        defaultTheme="light"
                         enableSystem
-                        disableTransitionOnChange
+                        // disableTransitionOnChange
                     >
+                        <ModalProvider />
+
+                        <SearchCommand />
+
                         <Toaster
                             richColors={true}
                             position="top-center"
                             theme="dark"
                         />
-                        <SearchCommand />
+
                         {children}
                     </ThemeProvider>
                 </ConvexClientProvider>
