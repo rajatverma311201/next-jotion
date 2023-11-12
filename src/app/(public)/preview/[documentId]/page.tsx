@@ -6,6 +6,7 @@ import { Id } from "@/../convex/_generated/dataModel";
 import { CoverImage } from "@/components/cover-image";
 import { useMemo } from "react";
 import dynamic from "next/dynamic";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 interface DocumentIdPageProps {
     params: {
@@ -32,14 +33,19 @@ const DocumentIdPage: React.FC<DocumentIdPageProps> = ({ params }) => {
 
     return (
         <>
-            <div>DocumentIdPage - {JSON.stringify(params)}</div>
-            <CoverImage url={document?.coverImage} />
-            <div className="mx-auto mt-5 md:max-w-3xl lg:max-w-4xl">
-                {document && <Toolbar initialData={document!} />}
-                <NoteEditor
-                    onChange={onChange}
-                    initialContent={document?.content}
-                />
+            <div className="absolute z-50 ">
+                <ThemeToggle />
+            </div>
+            <div className="pb-40">
+                <CoverImage preview url={document?.coverImage} />
+                <div className="mx-auto mt-5 md:max-w-3xl lg:max-w-4xl">
+                    {document && <Toolbar preview initialData={document!} />}
+                    <NoteEditor
+                        editable={false}
+                        onChange={onChange}
+                        initialContent={document?.content}
+                    />
+                </div>
             </div>
         </>
     );

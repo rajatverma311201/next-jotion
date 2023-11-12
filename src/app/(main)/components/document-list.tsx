@@ -80,9 +80,9 @@ export const DocumentList: React.FC<DocumentListProps> = ({
                         icon={FileIcon}
                         documentIcon={document.icon}
                         active={
-                            params.documentId === document._id ||
-                            parentDocIds?.[parentDocIds?.length - level - 1] ===
-                                document._id
+                            params.documentId === document._id
+                            // parentDocIds?.[parentDocIds?.length - level - 1] ===
+                            //     document._id
                         }
                         level={level}
                         onExpand={() => onExpand(document._id)}

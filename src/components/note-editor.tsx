@@ -28,7 +28,6 @@ const NoteEditor: React.FC<EditorProps> = ({
 
         return response.url;
     };
-    // console.log("NoteEditor", initialContent);
     const editor: BlockNoteEditor = useBlockNote({
         editable,
         initialContent: initialContent
@@ -39,7 +38,6 @@ const NoteEditor: React.FC<EditorProps> = ({
         },
         uploadFile: handleUpload,
     });
-    console.log("NoteEditor", editor);
 
     return (
         <div>

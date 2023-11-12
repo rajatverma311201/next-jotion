@@ -19,7 +19,6 @@ interface TrashBoxProps {
 export const TrashBox: React.FC<TrashBoxProps> = ({ onClose }) => {
     const router = useRouter();
     const params = useParams();
-    console.log(params);
     const documents = useQuery(api.documents.getTrash);
     const restore = useMutation(api.documents.restore);
     const remove = useMutation(api.documents.remove);
