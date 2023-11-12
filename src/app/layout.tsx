@@ -39,8 +39,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <body className={inter.className}>
                 <ThemeProvider
                     attribute="class"
-                    // defaultTheme="light"
-                    enableSystem
+                    defaultTheme="light"
+                    // enableSystem
                 >
                     <ConvexClientProvider>
                         <EdgeStoreProvider>
