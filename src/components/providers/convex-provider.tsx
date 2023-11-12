@@ -15,9 +15,9 @@ interface ConvexClientProviderProps {
 export const ConvexClientProvider: React.FC<ConvexClientProviderProps> = ({
     children,
 }) => {
-    const { theme } = useTheme();
+    const { resolvedTheme } = useTheme();
     let appearanceTheme = {};
-    if (theme === "dark") {
+    if (resolvedTheme === "dark") {
         appearanceTheme = { baseTheme: dark };
     }
 

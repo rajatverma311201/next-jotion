@@ -72,9 +72,7 @@ export const Title: React.FC<TitleProps> & { Skeleton: React.FC } = ({
                     size="sm"
                     className="h-auto p-1 font-normal"
                 >
-                    <span className="truncate text-xl font-semibold">
-                        {initialData?.title}
-                    </span>
+                    <span className="truncate">{initialData?.title}</span>
                 </Button>
             )}
         </div>
