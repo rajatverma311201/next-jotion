@@ -73,7 +73,7 @@ export const Publish: React.FC<PublishProps> = ({ initialData }) => {
                 <Button size="sm" variant="ghost">
                     Publish
                     {initialData.isPublished && (
-                        <Globe className="ml-2 h-4 w-4 text-sky-500" />
+                        <Globe className="ml-2 h-4 w-4 text-sky-600" />
                     )}
                 </Button>
             </PopoverTrigger>
@@ -86,16 +86,17 @@ export const Publish: React.FC<PublishProps> = ({ initialData }) => {
                 {initialData.isPublished ? (
                     <div className="space-y-4">
                         <div className="flex items-center gap-x-2">
-                            <Globe className="h-4 w-4 animate-pulse text-sky-500" />
-                            <p className="text-xs font-medium text-sky-500">
+                            <Globe className="h-4 w-4 animate-pulse text-sky-600" />
+                            <p className="text-xs font-medium text-sky-600">
                                 This note is live on web.
                             </p>
                         </div>
                         <div className="flex items-center">
                             <input
-                                className="h-8 flex-1 truncate rounded-l-md border bg-muted px-2 text-xs"
+                                className="h-8 flex-1  rounded-l-md border bg-muted px-2 text-xs"
                                 value={url}
                                 disabled
+                                readOnly
                             />
                             <Button
                                 onClick={onCopy}
@@ -111,7 +112,7 @@ export const Publish: React.FC<PublishProps> = ({ initialData }) => {
                         </div>
                         <Button
                             size="sm"
-                            className="w-full text-xs"
+                            className="w-full"
                             disabled={isSubmitting}
                             onClick={onUnpublish}
                         >

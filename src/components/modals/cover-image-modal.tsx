@@ -61,7 +61,6 @@ export const CoverImageModal = () => {
                     value={file}
                     onChange={onChange}
                 />
-                <h1>HELLO</h1>
             </DialogContent>
         </Dialog>
     );

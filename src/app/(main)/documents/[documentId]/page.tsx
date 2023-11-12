@@ -6,6 +6,7 @@ import { Id } from "@/../convex/_generated/dataModel";
 import { CoverImage } from "@/components/cover-image";
 import { useMemo } from "react";
 import dynamic from "next/dynamic";
+import { Spinner } from "@/components/spinner";
 
 interface DocumentIdPageProps {
     params: {
@@ -30,16 +31,27 @@ const DocumentIdPage: React.FC<DocumentIdPageProps> = ({ params }) => {
         });
     };
 
+    if (document === undefined) {
+        return (
+            <div className="flex h-full w-full items-center justify-center">
+                <Spinner size={"lg"} />
+            </div>
+        );
+    }
+
     return (
         <>
-            <div>DocumentIdPage - {JSON.stringify(params)}</div>
-            <CoverImage url={document?.coverImage} />
-            <div className="mx-auto mt-5 md:max-w-3xl lg:max-w-4xl">
-                {document && <Toolbar initialData={document!} />}
-                <NoteEditor
-                    onChange={onChange}
-                    initialContent={document?.content}
-                />
+            <div className="pb-40">
+                <CoverImage url={document?.coverImage} />
+                <div className="mx-auto mt-5 md:max-w-3xl lg:max-w-4xl">
+                    {document && <Toolbar initialData={document!} />}
+                    {document && (
+                        <NoteEditor
+                            onChange={onChange}
+                            initialContent={document?.content}
+                        />
+                    )}
+                </div>
             </div>
         </>
     );
